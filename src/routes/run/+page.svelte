@@ -1,6 +1,6 @@
 <script>
     import { runs, loading } from '$lib/stores/data.js';
-    import { formatDate, formatSummary, formatDigest } from '$lib/util.js';
+    import { formatDate, formatSummary, formatDigest, formatDuration } from '$lib/util.js';
     import { goto } from '$app/navigation';
     import GridTable from '$lib/components/GridTable.svelte';
 
@@ -12,7 +12,7 @@
         { label: 'metric' },
         { label: 'score_summary', format: formatSummary },
         { label: 'completed', format: formatDate },
-        { label: 'duration' },
+        { label: 'duration', format: formatDuration },
     ];
 </script>
 <div>

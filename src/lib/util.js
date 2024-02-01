@@ -42,3 +42,31 @@ export function formatSummary({mean, count, min, max }) {
 export function formatDigest(digest) {
     return digest.slice(0, 6);
 }
+
+const duration_pieces = [
+    { suffix: 's', modulo: 60, },
+    { suffix: 'm', modulo: 60, },
+    { suffix: 'h', modulo: 24, },
+    { suffix: 'd' },
+];
+
+export function formatDuration(seconds) {
+    const out = [];
+    for (const piece of duration_pieces) {
+        let value = seconds;
+        if (piece.modulo) {
+            value = seconds % piece.modulo;
+            seconds = Math.floor(seconds / piece.modulo);
+        }
+        if (piece.suffix === 's') {
+            out.push(`${value.toFixed(2)}${piece.suffix}`);
+        } else {
+            out.push(`${value}${piece.suffix}`);
+        }
+        if (seconds === 0) {
+            break;
+        }
+    }
+
+    return out.reverse().join(' ');
+}
