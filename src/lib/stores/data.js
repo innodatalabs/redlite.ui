@@ -82,7 +82,7 @@ export const aggregations = derived(runs, (runs, set) => {
         inst.highestScore = highestScore;
 
         for (const mod of Object.values(inst.models)) {
-            if (Math.abs(mod.score_summary.mean - highestScore) < TOLERANCE) {
+            if (Math.abs(mod.score_summary.mean - highestScore) < TOLERANCE && highestScore > TOLERANCE) {
                 mod.wins += 1;
                 byModel[mod.model].winRate += 1.;  // will rescale later
                 byModel[mod.model].inst[inst.instHash].winner = true;
