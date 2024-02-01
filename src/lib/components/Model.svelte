@@ -3,7 +3,7 @@
     import Caret from '$lib/components/Caret.svelte';
     import { formatSummary, formatDate } from '$lib/util.js';
 
-    const { model, score_summary, completed, run, meanWinRate, wins, taskCount, runCount, onclick, expandable=true } = $props();
+    const { model, score_summary, completed, run, meanWinRate, winner, taskCount, runCount, onclick, expandable=true } = $props();
     let expanded = $state(false);
 
     function onToggleExpansion() {
@@ -21,7 +21,7 @@
             {#if taskCount}<LabeledItem label="#tasks" value={taskCount} />{/if}
             {#if runCount}<LabeledItem label="#runs" value={runCount} />{/if}
             <LabeledItem label="run" value={run} />
-            {#if wins !== undefined}<LabeledItem label="wins" value={wins} />{/if}
+            {#if winner !== undefined}<LabeledItem label="winner" value={winner} />{/if}
         </div>
     </div>
 

@@ -44,6 +44,7 @@ export const aggregations = derived(runs, (runs, set) => {
                 data_digest: run.data_digest,
                 dataset: run.dataset,
                 metric: run.metric,
+                winner: false,
                 runs: [],
             };
         }
@@ -84,6 +85,7 @@ export const aggregations = derived(runs, (runs, set) => {
             if (Math.abs(mod.score_summary.mean - highestScore) < TOLERANCE) {
                 mod.wins += 1;
                 byModel[mod.model].winRate += 1.;  // will rescale later
+                byModel[mod.model].inst[inst.instHash].winner = true;
             }
         }
     }

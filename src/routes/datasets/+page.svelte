@@ -25,7 +25,7 @@
         model={modelName}
         score_summary={runs.score_summary}
         completed={runs.completed}
-        wins={runs.wins}
+        winner={runs.wins > 0}
         runCount={runs.runs.length}
     >
         {#each runs.runs as run (run.name)}

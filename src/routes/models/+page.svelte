@@ -21,6 +21,7 @@
         score_summary={digestProper.score_summary}
         completed={digestProper.completed}
         runCount={digestProper.runs.length}
+        winner={digestProper.winner}
         onclick={()=>goto(`/compare/${digestProper.data_digest}/${digestProper.metric}`)}
     >
         {#each digestProper.runs as run (run.name)}
