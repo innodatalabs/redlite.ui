@@ -1,16 +1,24 @@
 <script>
     import { runs, loading } from '$lib/stores/data.js';
+    import { formatDate, formatSummary, formatDigest } from '$lib/util.js';
     import { goto } from '$app/navigation';
-    import RunCard from '$lib/components/RunCard.svelte';
+    import GridTable from '$lib/components/GridTable.svelte';
+
+    const schema = [
+        { label: 'run', value: 'name', onclick: name => goto(`/run/${name}`), },
+        { label: 'model' },
+        { label: 'dataset' },
+        { label: 'data_digest', format: formatDigest, title: x => x },
+        { label: 'metric' },
+        { label: 'score_summary', format: formatSummary },
+        { label: 'completed', format: formatDate },
+        { label: 'duration' },
+    ];
 </script>
 <div>
 {#if $loading}
 Loading..
 {:else}
-    {#each $runs as run (run.name)}
-    <RunCard {...run} onclick={()=>goto(`/run/${run.name}`)}/>
-        <!-- <td class="p-2 border border-1 border-gray-300">{formatSummary(run.score_summary)}</td>
-        <td class="p-2 border border-1 border-gray-300">{formatDate(run.completed)}</td> -->
-    {/each}
+    <GridTable {schema} data={$runs} cols="8" />
 {/if}
 </div>

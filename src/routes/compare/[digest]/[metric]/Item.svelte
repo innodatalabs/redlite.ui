@@ -2,8 +2,7 @@
     import ExpandableTextBlock from '$lib/components/ExpandableTextBlock.svelte';
     import { tick } from 'svelte';
 
-    const { id, messages, expected, actuals, scores, scrollToId} = $props();
-    const mnemonic = 'ABCDEFG'
+    const { id, messages, expected, actuals, scores, scrollToId, modelsToCompare } = $props();
 
     let div;
     $effect(async () => {
@@ -57,12 +56,12 @@
     </div>
     {#each actuals as actual, i (i)}
     <div>
-        <div class="font-medium my-1 ml-2">actual {mnemonic[i]}:</div>
+        <div class="font-medium my-1 ml-2">actual {modelsToCompare[i]}:</div>
         <div class="ml-12 flex items-left">
             <ExpandableTextBlock>{actual}</ExpandableTextBlock></div>
         </div>
     <div class="my-1 ml-2">
-        <span class="font-medium">score {mnemonic[i]}:</span> {scores[i].toFixed(3)}
+        <span class="font-medium">score {modelsToCompare[i]}:</span> {scores[i].toFixed(3)}
     </div>
     {/each}
 </div>

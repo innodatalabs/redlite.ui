@@ -16,11 +16,18 @@
     dataset={inst.dataset}
     metric={inst.metric}
     data_digest={inst.data_digest}
+    modelCount={Object.keys(inst.models).length}
     onclick={()=>goto(`/compare/${inst.data_digest}/${inst.metric}`)}
     >
     {#each Object.entries(inst.models) as [modelName, runs] (modelName)}
     <div class="my-2">
-    <Model model={modelName} score_summary={runs.score_summary} completed={runs.completed} wins={runs.wins} >
+    <Model
+        model={modelName}
+        score_summary={runs.score_summary}
+        completed={runs.completed}
+        wins={runs.wins}
+        runCount={runs.runs.length}
+    >
         {#each runs.runs as run (run.name)}
             <RunCard
                 name={run.name}

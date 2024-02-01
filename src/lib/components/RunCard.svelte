@@ -25,7 +25,7 @@
     }
 </script>
 <div>
-    <div class="text-gray-700 hover:bg-blue-50 m-2 p-1 rounded-lg border border-1 border-blue-300 shadow-blue-300 grid grid-cols-9 overflow-x-hidden shadow" title={formatLabels(dataset_labels)}>
+    <div class="text-gray-700 m-2 p-1 rounded-lg border border-1 border-gray-300 grid grid-cols-9 overflow-x-hidden" title={formatLabels(dataset_labels)}>
         <LabeledItem label="run" value={name} {onclick} />
         <LabeledItem label="model" value={model} />
         <LabeledItem label="dataset" value={dataset} />

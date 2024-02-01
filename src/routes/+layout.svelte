@@ -24,8 +24,4 @@
 .font-system {
     font-family: var(--system-font);
 }
-
-.divider-bottom {
-    box-shadow: inset 0 -1px rgb(200, 200, 200);
-}
 </style>

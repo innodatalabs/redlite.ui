@@ -11,7 +11,7 @@
 {:else}
 {#each $aggregations.models as model (model.model)}
 <div class="m-2">
-<Model model={model.model} meanWinRate={model.winRate}>
+<Model model={model.model} meanWinRate={model.winRate} taskCount={Object.keys(model.inst).length} >
     {#each Object.entries(model.inst) as [digestHash, digestProper] (digestHash)}
     <div class="my-2">
     <Digest
@@ -20,6 +20,7 @@
         data_digest={digestProper.data_digest}
         score_summary={digestProper.score_summary}
         completed={digestProper.completed}
+        runCount={digestProper.runs.length}
         onclick={()=>goto(`/compare/${digestProper.data_digest}/${digestProper.metric}`)}
     >
         {#each digestProper.runs as run (run.name)}

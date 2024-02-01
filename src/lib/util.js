@@ -38,3 +38,7 @@ export function mergeSummaries(summaries) {
 export function formatSummary({mean, count, min, max }) {
     return `${mean.toFixed(3)} (#${count}, ${min.toFixed(3)}-${max.toFixed(3)})`;
 }
+
+export function formatDigest(digest) {
+    return digest.slice(0, 6);
+}
