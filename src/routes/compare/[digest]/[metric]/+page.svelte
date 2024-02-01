@@ -78,12 +78,14 @@
     />
     <div>
     <button
-        class="mt-2 bg-blue-500 text-white shadow-md px-2 py-1 border border-gray-700 rounded-lg"
+        class="mt-2 text-white shadow-md px-2 py-1 border rounded-lg"
         aria-label="Compare"
         onclick={() => runCompare()}
         disabled={Object.values(checked).length < 2}
         class:bg-blue-100={Object.values(checked).length < 2}
+        class:bg-blue-500={Object.values(checked).length >= 2}
         class:border-gray-300={Object.values(checked).length < 2}
+        class:border-gray-700={Object.values(checked).length >= 2}
     >Compare</button>
     </div>
 </div>
