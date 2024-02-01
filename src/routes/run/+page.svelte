@@ -19,6 +19,6 @@
 {#if $loading}
 Loading..
 {:else}
-    <GridTable {schema} data={$runs} cols="8" />
+    <GridTable {schema} data={$runs} />
 {/if}
 </div>
