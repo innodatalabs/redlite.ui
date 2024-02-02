@@ -13,7 +13,7 @@
     });
 </script>
 <div class="relative flex-grow border rounded">
-<div bind:this={div} class="font-mono max-h-128 text-base bg-white px-1 break-word whitespace-pre-wrap overflow-y-hidden rounded" class:collapsed={needCollapse && collapsed}>
+<div bind:this={div} class="font-mono text-sm max-h-128 text-base bg-white px-1 break-word whitespace-pre-wrap overflow-y-hidden rounded" class:collapsed={needCollapse && collapsed}>
     <slot />&#8203;
 </div>
 {#if needCollapse}

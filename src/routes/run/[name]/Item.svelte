@@ -14,7 +14,6 @@
     })
 </script>
 <div class="m-2 p-1 bg-gray-50 rounded-lg shadow border border-gray-400" bind:this={div}>
-    {scrollTo, id}
     <div class="flex">
         <div class="font-medium my-1 ml-2">messages:</div>
         <span class="grow text-right mr-2 text-sm text-gray-500">id: {id}</span>
