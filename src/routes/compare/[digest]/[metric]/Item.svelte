@@ -3,17 +3,8 @@
     import { tick } from 'svelte';
 
     const { id, messages, expected, actuals, scores, scrollToId, modelsToCompare } = $props();
-
-    let div;
-    $effect(async () => {
-        div;
-        if (id === scrollToId) {
-            await tick();
-            div.scrollIntoView({smooth: true})
-        }
-    })
 </script>
-<div class="my-2 p-1 bg-gray-50 rounded-lg shadow border border-gray-400" bind:this={div}>
+<div class="my-2 p-1 bg-gray-50 rounded-lg shadow border border-gray-400">
     <div class="flex">
         <div class="font-medium my-1 ml-2">messages:</div>
         <span class="grow text-right mr-2 text-sm text-gray-500">id: {id}</span>

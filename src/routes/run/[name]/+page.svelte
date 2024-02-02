@@ -1,10 +1,7 @@
 <script>
     import { page } from '$app/stores';
     import Item from './Item.svelte';
-    import { formatDate, formatSummary } from '$lib/util.js';
-    import Bubble from '$lib/components/Bubble.svelte';
     import RunCard from '$lib/components/RunCard.svelte';
-    import Labels from '$lib/components/Labels.svelte';
     import { loadMeta, loadData } from '$lib/load.js';
 
 </script>

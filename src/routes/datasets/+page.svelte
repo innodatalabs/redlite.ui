@@ -1,7 +1,5 @@
 <script>
     import { goto } from '$app/navigation';
-    import { formatSummary, formatDate } from '$lib/util.js';
-    import Bubble from '$lib/components/Bubble.svelte';
     import Digest from '$lib/components/Digest.svelte';
     import Model from '$lib/components/Model.svelte';
     import RunCard from '$lib/components/RunCard.svelte';

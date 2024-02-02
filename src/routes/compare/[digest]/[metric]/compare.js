@@ -12,7 +12,6 @@ export async function compareRuns (runs) {
         const items = [];
         let done = false;
         for (const a of arrays) {
-            console.log(a)
             const item = await a.next();
             if (item.done) {
                 done = true;
@@ -23,7 +22,6 @@ export async function compareRuns (runs) {
         if (done) {
             break;
         }
-        console.log(items);
         const base = {...items[0]};
         delete base.score;
         delete base.actual;
@@ -34,6 +32,5 @@ export async function compareRuns (runs) {
         out.push(base);
     }
 
-    console.log(out);
     return out;
 }

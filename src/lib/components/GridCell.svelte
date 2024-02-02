@@ -6,7 +6,6 @@
 
     const val = item[value || label];
     const textColor = textColors[label];
-
 </script>
 
 <div
