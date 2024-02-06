@@ -2,7 +2,7 @@ import { dev } from '$app/environment';
 
 function api(path) {
     if (dev) {
-        return `http://localhost:8000${path}`;
+        return `http://localhost:9090${path}`;
     } else {
         return path;
     }
@@ -23,7 +23,7 @@ export async function loadRuns() {
     return await response.json();
 }
 
-export async function loadDigests () {
+export async function loadTasks () {
     const index = {};
 
     for (const run of await loadRuns()) {

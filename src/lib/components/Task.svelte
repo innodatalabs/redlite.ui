@@ -3,7 +3,7 @@
     import Caret from '$lib/components/Caret.svelte';
     import { formatSummary, formatDate } from '$lib/util.js';
 
-    const { dataset, metric, data_digest, score_summary, completed, runCount, modelCount, winner, onclick, expandable=true } = $props();
+    const { dataset, split, metric, data_digest, score_summary, completed, runCount, modelCount, winner, onclick, expandable=true } = $props();
     let expanded = $state(false);
 
     function onToggleExpansion() {
@@ -13,9 +13,9 @@
 <div class="">
     <div class="flex w-full border border-gray-300 rounded-lg">
         {#if expandable}<Caret {expanded} {onToggleExpansion} />{/if}
-        <div class="grid grid-cols-7 flex-grow">
+        <div class="grid grid-cols-8 flex-grow">
             <LabeledItem label="dataset" value={dataset} {onclick} />
-            <!-- <Bubble label="dataset" value={dataset} {onclick} /> -->
+            <LabeledItem label="split" value={split} />
             <LabeledItem label="metric" value={metric} />
             <LabeledItem label="data_digest" value={data_digest.slice(0, 6)} title={data_digest} />
             {#if runCount}<LabeledItem label="#runs" value={runCount} />{/if}

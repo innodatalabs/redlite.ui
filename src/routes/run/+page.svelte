@@ -5,9 +5,10 @@
     import GridTable from '$lib/components/GridTable.svelte';
 
     const schema = [
-        { label: 'run', value: 'name', onclick: name => goto(`/run/${name}`), },
+        { label: 'run', onclick: name => goto(`/run/${name}`), },
         { label: 'model' },
         { label: 'dataset' },
+        { label: 'split' },
         { label: 'data_digest', format: formatDigest, title: x => x },
         { label: 'metric' },
         { label: 'score_summary', format: formatSummary },

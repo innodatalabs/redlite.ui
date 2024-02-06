@@ -23,87 +23,89 @@ export const runs = (() => {
     return { subscribe, refresh };
 })();
 
-export const instHash = run => `${run.dataset} ${run.data_digest} ${run.metric}`;
+export const taskHash = run => `${run.dataset} ${run.split} ${run.data_digest} ${run.metric}`;
 
 const TOLERANCE = 0.0001;
 
 export const aggregations = derived(runs, (runs, set) => {
     const byModel = {};
-    const byInst = {};
+    const byTask = {};
 
     for (const run of runs) {
         if (byModel[run.model] === undefined) {
             byModel[run.model] = {
                 model: run.model,
-                inst: {},
+                tasks: {},
                 winRate: 0.,
             };
         }
-        if (byModel[run.model].inst[instHash(run)] === undefined) {
-            byModel[run.model].inst[instHash(run)] = {
+        if (byModel[run.model].tasks[taskHash(run)] === undefined) {
+            byModel[run.model].tasks[taskHash(run)] = {
                 data_digest: run.data_digest,
                 dataset: run.dataset,
+                split: run.split,
                 metric: run.metric,
                 winner: false,
                 runs: [],
             };
         }
-        byModel[run.model].inst[instHash(run)].runs.push(run);
+        byModel[run.model].tasks[taskHash(run)].runs.push(run);
 
-        if (byInst[instHash(run)] === undefined) {
-            byInst[instHash(run)] = {
-                instHash: instHash(run),
+        if (byTask[taskHash(run)] === undefined) {
+            byTask[taskHash(run)] = {
+                taskHash: taskHash(run),
                 data_digest: run.data_digest,
                 dataset: run.dataset,
+                split: run.split,
                 metric: run.metric,
                 models: {},
                 highestScore: 0.0,
             };
         }
-        if (byInst[instHash(run)].models[run.model] === undefined) {
-            byInst[instHash(run)].models[run.model] = {
+        if (byTask[taskHash(run)].models[run.model] === undefined) {
+            byTask[taskHash(run)].models[run.model] = {
                 model: run.model,
                 runs: [],
                 wins: 0,
             };
         }
-        byInst[instHash(run)].models[run.model].runs.push(run);
+        byTask[taskHash(run)].models[run.model].runs.push(run);
     }
 
-    for (const inst of Object.values(byInst)) {
-        for (const mod of Object.values(inst.models)) {
+    for (const task of Object.values(byTask)) {
+        for (const mod of Object.values(task.models)) {
             mod.runs.sort((a, b) => new Date(b.completed) - new Date(a.completed));
             mod.completed = mod.runs[0].completed;
             mod.score_summary = mod.runs[0].score_summary;
         }
 
         // compute win counts
-        const highestScore = Math.max(...Object.values(inst.models).map(x => x.score_summary.mean));
-        inst.highestScore = highestScore;
+        const highestScore = Math.max(...Object.values(task.models).map(x => x.score_summary.mean));
+        task.highestScore = highestScore;
 
-        for (const mod of Object.values(inst.models)) {
+        for (const mod of Object.values(task.models)) {
             if (Math.abs(mod.score_summary.mean - highestScore) < TOLERANCE && highestScore > TOLERANCE) {
                 mod.wins += 1;
                 byModel[mod.model].winRate += 1.;  // will rescale later
-                byModel[mod.model].inst[inst.instHash].winner = true;
+                byModel[mod.model].tasks[task.taskHash].winner = true;
             }
         }
     }
 
     for (const mod of Object.values(byModel)) {
-        for (const inst of Object.values(mod.inst)) {
-            inst.runs.sort((a, b) => new Date(b.completed) - new Date(a.completed));
-            inst.completed = inst.runs[0].completed;
-            inst.score_summary = inst.runs[0].score_summary;
+        for (const task of Object.values(mod.tasks)) {
+            task.runs.sort((a, b) => new Date(b.completed) - new Date(a.completed));
+            task.completed = task.runs[0].completed;
+            task.score_summary = task.runs[0].score_summary;
         }
-        mod.winRate /= Object.keys(byInst).length;
+        mod.winRate /= Object.keys(byTask).length;
     }
 
     const models = [...Object.values(byModel)];
     models.sort((a, b) => b.winRate - a.winRate);
 
-    const instances = [...Object.values(byInst)];
-    instances.sort((a, b) => new Date(b.completed) - new Date(a.completed));
+    const tasks = [...Object.values(byTask)];
+    tasks.sort((a, b) => new Date(b.completed) - new Date(a.completed));
 
-    set({ models, instances });
-}, { models: [], instances: [] });
+    set({ models, tasks });
+}, { models: [], tasks: [] });

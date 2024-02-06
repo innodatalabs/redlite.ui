@@ -1,19 +1,13 @@
 <script>
     import { page } from '$app/stores';
-    import Bubble from '$lib/components/Bubble.svelte';
-    import Labels from '$lib/components/Labels.svelte';
-    import { formatSummary, formatDate } from '$lib/util.js';
     import Item from './Item.svelte';
     import { loadModels } from './load-models.js';
     import { compareRuns } from './compare.js';
-    import RunCard from '$lib/components/RunCard.svelte';
-    import Digest from '$lib/components/Digest.svelte';
+    import Task from '$lib/components/Task.svelte';
     import Model from '$lib/components/Model.svelte';
 
     const checked = $state({});
-
-    const mnemonic = "ABCDEFG";
-
+    let canCompare = $state(false);
     const comparison = $state([]);
 
     function toggleModel (m) {
@@ -24,6 +18,7 @@
         } else {
             delete checked[m.run];
         }
+        canCompare = Object.keys(checked).length >= 2;
     }
 
     let comparingInProgress = $state(false);
@@ -49,18 +44,6 @@
             comparingInProgress = false;
         }
     }
-
-    function countWins (comparison, position) {
-        let count = 0;
-        for (const cmp of comparison) {
-            const best = Math.max(...cmp.scores);
-            if (cmp.scores[position] >= best) {
-                count += 1;
-            }
-        }
-
-        return count;
-    }
 </script>
 <div class="m-2">
 {#if $page.params.digest && $page.params.metric}
@@ -68,8 +51,9 @@
     Loading..
 {:then x}
 <div class="flex flex-col">
-    <Digest
+    <Task
         dataset={x.dataset}
+        split={x.split}
         data_digest={x.data_digest}
         metric={x.metric}
         datase_labels={x.dataset_labels}
@@ -81,11 +65,11 @@
         class="mt-2 text-white shadow-md px-2 py-1 border rounded-lg"
         aria-label="Compare"
         onclick={() => runCompare()}
-        disabled={Object.values(checked).length < 2}
-        class:bg-blue-100={Object.values(checked).length < 2}
-        class:bg-blue-500={Object.values(checked).length >= 2}
-        class:border-gray-300={Object.values(checked).length < 2}
-        class:border-gray-700={Object.values(checked).length >= 2}
+        disabled={!canCompare}
+        class:bg-blue-100={!canCompare}
+        class:bg-blue-500={canCompare}
+        class:border-gray-300={!canCompare}
+        class:border-gray-700={canCompare}
     >Compare</button>
     </div>
 </div>

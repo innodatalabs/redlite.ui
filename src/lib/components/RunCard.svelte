@@ -3,9 +3,10 @@
     import { formatSummary, formatDate } from '$lib/util.js';
 
     const {
-        name,
+        run,
         model,
         dataset,
+        split,
         dataset_labels,
         data_digest,
         metric,
@@ -26,9 +27,10 @@
 </script>
 <div>
     <div class="text-gray-700 m-2 rounded-lg border border-1 border-gray-300 grid grid-cols-9 overflow-x-hidden" title={formatLabels(dataset_labels)}>
-        <LabeledItem label="run" value={name} {onclick} />
+        <LabeledItem label="run" value={run} {onclick} />
         <LabeledItem label="model" value={model} />
         <LabeledItem label="dataset" value={dataset} />
+        <LabeledItem label="split" value={split} />
         <LabeledItem label="data_digest" value={data_digest?.slice(0, 6)} title={data_digest} />
         <LabeledItem label="metric" value={metric} />
         {#if score_summary}<LabeledItem label="score" value={formatSummary(score_summary)} />{/if}
