@@ -70,3 +70,8 @@ export function formatDuration(seconds) {
 
     return out.reverse().join(' ');
 }
+
+
+export function safeName(name) {
+    return encodeURIComponent(name);
+}

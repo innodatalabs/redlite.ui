@@ -1,11 +1,12 @@
 <script>
     import { runs, loading } from '$lib/stores/data.js';
-    import { formatDate, formatSummary, formatDigest, formatDuration } from '$lib/util.js';
+    import { formatDate, formatSummary, formatDigest, formatDuration, safeName } from '$lib/util.js';
     import { goto } from '$app/navigation';
     import GridTable from '$lib/components/GridTable.svelte';
+    import NoDataFound from '$lib/components/NoDataFound.svelte';
 
     const schema = [
-        { label: 'run', onclick: name => goto(`/run/${name}`), },
+        { label: 'run', onclick: name => goto(`/run/${safeName(name)}`), },
         { label: 'model' },
         { label: 'dataset' },
         { label: 'split' },
@@ -19,6 +20,8 @@
 <div>
 {#if $loading}
 Loading..
+{:else if $runs.length === 0}
+<NoDataFound />
 {:else}
     <GridTable {schema} data={$runs} />
 {/if}

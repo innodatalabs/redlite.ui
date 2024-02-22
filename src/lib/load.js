@@ -1,20 +1,21 @@
 import { dev } from '$app/environment';
+import { safeName } from './util.js';
 
 function api(path) {
     if (dev) {
-        return `http://localhost:9090${path}`;
+        return `http://localhost:8000${path}`;
     } else {
         return path;
     }
 }
 
 export async function loadMeta(runName) {
-    const response = await fetch(api(`/api/runs/${runName}/meta`));
+    const response = await fetch(api(`/api/runs/${safeName(runName)}/meta`));
     return await response.json();
 }
 
 export async function loadData(runName) {
-    const response = await fetch(api(`/api/runs/${runName}/data`));
+    const response = await fetch(api(`/api/runs/${safeName(runName)}/data`));
     return await response.json();
 }
 

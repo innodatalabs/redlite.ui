@@ -3,11 +3,15 @@
     import RunCard from '$lib/components/RunCard.svelte';
     import Task from '$lib/components/Task.svelte';
     import Model from '$lib/components/Model.svelte';
+    import NoDataFound from '$lib/components/NoDataFound.svelte';
     import { loading, aggregations } from '$lib/stores/data.js';
+    import { safeName } from '$lib/util.js';
 
     </script>
 {#if $loading}
     Loading..
+{:else if $aggregations.models.length === 0}
+<NoDataFound />
 {:else}
 {#each $aggregations.models as model (model.model)}
 <div class="m-2">
@@ -23,7 +27,7 @@
         completed={task.completed}
         runCount={task.runs.length}
         winner={task.winner}
-        onclick={()=>goto(`/compare/${task.data_digest}/${task.metric}`)}
+        onclick={()=>goto(`/compare/${task.data_digest}/${safeName(task.metric)}`)}
     >
         {#each task.runs as run (run.run)}
             <RunCard
@@ -33,7 +37,7 @@
                 duration={run.duration}
                 max_samples={run.max_samples}
                 dataset_labels={run.dataset_labels}
-                onclick={()=>goto(`/run/${run.run}`)}
+                onclick={()=>goto(`/run/${safeName(run.run)}`)}
             />
         {/each}
     </Task>
