@@ -19,7 +19,7 @@
 
         const labels_x = [...xs].toSorted();
         const labels_y = [...ys].toSorted();
-        const v_min = Math.min(...values.values());
+        const v_min = Math.min(...values.values()) - 1.e-5;
         const v_max = Math.max(...values.values());
 
         return {
@@ -70,8 +70,13 @@
     async function getChartSVG() {
         const svg = document.getElementById('chart');
         const svgString = (new XMLSerializer()).serializeToString(svg);
-        await navigator.clipboard.writeText(svgString);
-        window.alert('SVG text copied to clipboard')
+        try {
+            await navigator.clipboard.writeText(svgString);
+            window.alert('SVG text copied to clipboard')
+        } catch (err) {
+            console.log(svgString);
+            window.alert('SVG text printed to DEV console (clipboard API not available)')
+        }
     }
 
 </script>
