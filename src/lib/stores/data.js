@@ -109,3 +109,20 @@ export const aggregations = derived(runs, (runs, set) => {
 
     set({ models, tasks });
 }, { models: [], tasks: [] });
+
+
+export const heatmap = derived(aggregations, aggregations => {
+    const data = [];
+
+    for (const task of aggregations.tasks) {
+        for (const model of Object.values(task.models)) {
+            data.push({
+                x: task.dataset + '@' + task.data_digest.slice(0, 6),
+                y: model.model,
+                v: model.score_summary.mean,
+            })
+        }
+    }
+
+    return data;
+}, []);

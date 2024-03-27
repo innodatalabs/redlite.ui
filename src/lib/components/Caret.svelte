@@ -1,5 +1,5 @@
 <script>
-    const { expanded, onToggleExpansion, ...restProps } = $props()
+    const { expanded, onToggleExpansion, ...restProps } = $props();
     const cls = restProps.class;
     delete restProps.class;
 </script>

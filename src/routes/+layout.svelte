@@ -8,6 +8,7 @@
         <Section label="Models" path="/model" />
         <Section label="Tasks" path="/task" />
         <Section label="Runs" path="/run" />
+        <Section label="Heatmap" path="/heatmap" />
         <Section label="Run Details" path="/run/[name]" hidden={true} />
         <Section label="Compare Models" path="/compare/[digest]/[metric]" hidden={true} />
         <div class="ml-auto mr-2">
